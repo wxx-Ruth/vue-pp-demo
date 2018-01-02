@@ -5,7 +5,7 @@
             <div class="c-related-title">
                 相关圈子推荐
             </div>
-                <div class="m-related-lists" v-scroll >
+                <div class="m-related-lists" v-scroll.scrollX>
                     <ul class="m-related-allstar" style="-webkit-transform: translate(0px, 0px) scale(1);transform: translate(0px, 0px) scale(1);">
                         <li  :data-wallId="item.wallId" v-for="item in relatedCircles">
                             <a href="javascript:;" class="m-related-link">

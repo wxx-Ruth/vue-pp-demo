@@ -1,9 +1,10 @@
 import { createApp } from './app'
 
 const isDev = process.env.NODE_ENV !== 'production'
-
+// 暴露promise
 export default context => {
   return new Promise((resolve, reject) => {
+    console.log('-------' + Date.now())
     const s = isDev && Date.now()
     const { app, router, store } = createApp(context)
     router.push(context.url)

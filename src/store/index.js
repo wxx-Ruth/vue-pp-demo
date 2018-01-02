@@ -4,6 +4,7 @@ import actions from './actions'
 import mutations from './mutations'
 import getters from './getters'
 import circles from './modules/circle'
+import groupInfo from './modules/groupChat'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ export function createStore () {
     mutations,
     getters,
     modules: {
-      circles
+      circles,
+      groupInfo
     }
   })
   return store
