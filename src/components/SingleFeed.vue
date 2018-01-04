@@ -53,7 +53,7 @@
                     <span class="c-icons-desc" data-attr="commentText" v-if="item.commentCount==0">评论</span>
                     <i class="c-icons-num" data-attr="commentCount" v-else>{{item.commentCount}}</i>
                 </a>
-                <a href="javascript:;" class="m-icon-link" :class="{ilike: `${item.isAgree}`}" :data-wallId = "item.wallId" data-block = "505201_5_1" :data-wallName="item.wallName" :data-wallType="item.wallType" :data-owner="item.uid" :data-sourceType="item.sourceType" :data-feedId="item.feedId"
+                <a href="javascript:;" class="m-icon-link" :class="{ilike: item.isAgree}" :data-wallId="item.wallId" data-block="505201_5_1" :data-wallName="item.wallName" :data-wallType="item.wallType" :data-owner="item.uid" :data-sourceType="item.sourceType" :data-feedId="item.feedId"
                 data-type="like">
                     <i class="c-pp-newIcon c-pp-newlike"></i>
                     <span class="c-icons-desc" data-node="agreeText" v-if="item.agreeCount==0">点赞</span>

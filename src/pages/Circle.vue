@@ -33,6 +33,9 @@
             </div>
         </div>
     </div>
+     <base-load-bottom
+      :callback="getCircleData.bind(this)"
+    ></base-load-bottom>
   </div>
 </template>
 <script>
@@ -42,6 +45,7 @@ import FeedList from 'components/FeedList'
 import ProList from 'components/ProList'
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
+import BaseLoadBottom from 'components/base/BaseBottomLoading'
 
 export default {
   name: 'circle',
@@ -49,11 +53,15 @@ export default {
     CommonHeader,
     CircleHeader,
     FeedList,
-    ProList
+    ProList,
+    BaseLoadBottom
   },
   data () {
     return {
-      currentIndex: 0
+      currentIndex: 0,
+      lastFeedId: 0,
+      snsTime: 0,
+      circleId: 0
     }
   },
   computed: {
@@ -61,7 +69,11 @@ export default {
       return this.$store.state.circles.circle
     },
     feeds () {
-      return this.$store.state.circles.feedList
+      let feedList = this.$store.state.circles.feedList
+      let len = feedList.length
+      this.lastFeedId = feedList[len - 1].feedId
+      this.snsTime = feedList[len - 1].snsTime
+      return feedList
     },
     relatedCircles () {
       return this.$store.state.circles.relatedCircles
@@ -71,8 +83,8 @@ export default {
     }
   },
   asyncData ({ store, route }) {
-    const circleId = route.params.circleId
-    return store.dispatch('getCircleData', circleId)
+    this.circleId = route.params.circleId
+    return store.dispatch('getCircleData', this.circleId)
   },
   mounted () {
     const that = this
@@ -102,6 +114,14 @@ export default {
         left: left,
         right: right
       }
+    },
+    getCircleData () {
+      return this.$store.dispatch('getMoreCircle', {
+        feedId: this.lastFeedId,
+        snsTime: this.snsTime,
+        upOrDown: 1,
+        circleId: this.$route.params.circleId
+      })
     }
   }
 }
