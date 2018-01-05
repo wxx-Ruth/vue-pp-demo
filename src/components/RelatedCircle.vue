@@ -25,7 +25,14 @@
 
 <script>
 export default {
-  name: 'related-circle',
-  props: ['relatedCircles']
+  name: 'RelatedCircle',
+  props: {
+    relatedCircles: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  }
 }
 </script>

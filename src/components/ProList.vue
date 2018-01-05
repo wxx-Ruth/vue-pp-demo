@@ -61,8 +61,13 @@
 <script>
 import services from '../services/circle'
 export default {
-  name: 'pro-list',
-  props: ['starId'],
+  name: 'ProList',
+  props: {
+    starId: {
+      type: Number,
+      required: true
+    }
+  },
   data () {
     return {
       starVideos: []

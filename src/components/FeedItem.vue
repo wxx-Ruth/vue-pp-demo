@@ -39,8 +39,8 @@
             <div class="m-pp-txt_tit max-line2">
                 {{item.feedTitle}}
             </div>
-        <pic-feed :picfeed="item" v-if="item.sourceType === 1 || item.sourceType === 9"></pic-feed>
-        <video-feed :videofeed="item" v-else="item.sourceType === 8"></video-feed>
+        <pic-feed :pic-feed="item" v-if="item.sourceType === 1 || item.sourceType === 9"></pic-feed>
+        <video-feed :video-feed="item" v-else="item.sourceType === 8"></video-feed>
         <!--相关操作-->
         <div class="m-box-items m-box-items-full">
             <div class="m-pp-new-icons" data-attr="detail">
@@ -54,7 +54,7 @@
                     <i class="c-icons-num" data-attr="commentCount" v-else>{{item.commentCount}}</i>
                 </a>
                 <a href="javascript:;" class="m-icon-link" :class="{ilike: item.isAgree}" :data-wallId="item.wallId" data-block="505201_5_1" :data-wallName="item.wallName" :data-wallType="item.wallType" :data-owner="item.uid" :data-sourceType="item.sourceType" :data-feedId="item.feedId"
-                data-type="like">
+                @click="doLike(item.isAgree, item.wallId, item.feedId, item.sourceType)">
                     <i class="c-pp-newIcon c-pp-newlike"></i>
                     <span class="c-icons-desc" data-node="agreeText" v-if="item.agreeCount==0">点赞</span>
                     <i class="c-icons-num" data-node="agreeCount" v-else>{{item.agreeCount}}</i>
@@ -67,14 +67,39 @@
 </template>
 
 <script>
-    import PicFeed from 'components/PicFeed'
-    import VideoFeed from 'components/VideoFeed'
+    import PicFeed from 'components/FeedPic'
+    import VideoFeed from 'components/FeedVideo'
+    import {isLogin} from '@/services/user'
+    import services from '../services/circle'
     export default {
-      name: 'single-feed',
-      props: ['item'],
+      name: 'FeedItem',
+      props: {
+        item: {
+          type: Object
+        }
+      },
       components: {
         PicFeed,
         VideoFeed
+      },
+      methods: {
+        doLike (isAgree, wallId, feedId, sourceType) {
+          this.params = {
+            wallId: wallId,
+            feedId: feedId,
+            sourceType: sourceType
+          }
+          if (isLogin()) {
+            window.location.href = 'http://m.iqiyi.com/user.html'
+          } else {
+            if (isAgree) {
+              this.params.agree = 0
+              this.ilike = false
+            } else {
+              services.getAgree(this.params)
+            }
+          }
+        }
       }
     }
 </script>

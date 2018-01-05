@@ -1,6 +1,6 @@
 <template>
   <div>
-      <common-header/>
+      <base-header/>
       <circle-header :circle="circle"></circle-header>
     
     <div class="swiper-container">
@@ -39,7 +39,7 @@
   </div>
 </template>
 <script>
-import CommonHeader from 'components/common/Header'
+import BaseHeader from 'components/base/BaseHeader'
 import CircleHeader from 'components/CircleHeadBanner'
 import FeedList from 'components/FeedList'
 import ProList from 'components/ProList'
@@ -48,9 +48,9 @@ import 'swiper/dist/css/swiper.min.css'
 import BaseLoadBottom from 'components/base/BaseBottomLoading'
 
 export default {
-  name: 'circle',
+  name: 'CircleList',
   components: {
-    CommonHeader,
+    BaseHeader,
     CircleHeader,
     FeedList,
     ProList,

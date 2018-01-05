@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Circle from 'pages/Circle'
-import groupChat from 'pages/groupChat'
+import Circle from 'pages/CircleList'
+import GroupChat from 'pages/GroupChat'
 
 Vue.use(Router)
 
@@ -17,7 +17,7 @@ export function createRouter () {
       {
         path: '/groupShare.html',
         name: 'groupchat',
-        component: groupChat
+        component: GroupChat
       }
     ]
   })

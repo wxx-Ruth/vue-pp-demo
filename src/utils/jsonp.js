@@ -2,7 +2,7 @@ import qs from 'qs'
 
 export default function jsonp (url, params = {}, opts = {}) {
   const callbackName = (opts.callbackName || '__jsonp') + Date.now()
-  const timeout = opts.timeout || 3000
+  const timeout = opts.timeout || 15000
   const target = document.head
   let timer
   return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ export default function jsonp (url, params = {}, opts = {}) {
     function removeScript () {
       if (script) target.removeChild(script)
       script.removeEventListener('error', errorHandle)
-      window[callbackName] = void 0
+      window[callbackName] = function () {}
       if (timer) clearTimeout(timer)
     }
   })

@@ -1,10 +1,10 @@
 <template>
     <div :class="classObj[0]">
     <p class="m-pp-txt max-line3">
-        <span v-html="picfeed.description"></span>
+        <span v-html="picFeed.description"></span>
     </p>
     <ul :class="classObj[1]" data-node="detail">
-        <li class="m-pic" v-for="(picInfo, index) in picfeed.picList">
+        <li class="m-pic" v-for="(picInfo, index) in picFeed.picList">
             <div class="piclist-img">
                 <a href="javascript:;" :data-index="index" class="c-pic-link" :style="{backgroundImage:`url(${picInfo.listPage})`}">
                         <div class="c-pp-rb">
@@ -20,11 +20,15 @@
 </template>
 <script>
     export default {
-      name: 'pic-feed',
-      props: ['picfeed'],
+      name: 'FeedPic',
+      props: {
+        picFeed: {
+          type: Object
+        }
+      },
       computed: {
         classObj () {
-          const len = this.picfeed.picList.length
+          const len = this.picFeed.picList.length
           let classTag = {
             'm-pp-threelist': false,
             'm-pp-longlist': false,
@@ -39,7 +43,7 @@
             'm-three-piclist': false
           }
           if (len === 1) {
-            let firstItem = this.picfeed.picList[0]
+            let firstItem = this.picFeed.picList[0]
             if (firstItem.isLongPic) {
               classTag['m-pp-longlist'] = true
               classInner['m-long-piclist'] = true

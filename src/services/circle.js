@@ -7,7 +7,8 @@ export default {
   getCircleData,
   getStarPro,
   getGroupData,
-  getMoreCicle
+  getMoreCicle,
+  getAgree
 }
 function getCircleData (circleId) {
   console.log(`http://pub.m.iqiyi.com/h5/bubble/circleInfo.json?circleId=${circleId}`)
@@ -45,6 +46,20 @@ function getMoreCicle (params) {
     device_id: user.getAnonymousUid()
   }
   return jsonp(`http://pub.m.iqiyi.com/h5/bubble/getFeeds.json`, Object.assign(opt, params)).then((data) => {
+    const code = data.code
+    if (code === 'A00000') {
+      return data.data
+    }
+  })
+}
+// 点赞接口
+function getAgree (params) {
+  const opt = {
+    agenttype: 119,
+    authcookie: user.getAuthcookie(),
+    device_id: user.getAnonymousUid()
+  }
+  return jsonp(`//api.t.iqiyi.com/feed/agree`, Object.assign(opt, params)).then((data) => {
     const code = data.code
     if (code === 'A00000') {
       return data.data

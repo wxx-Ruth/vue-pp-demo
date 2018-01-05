@@ -1,12 +1,12 @@
 <template>
     <div class="m-box m-box-mid m-pp-bgGray" data-id="feedList" data-from="circlePage">
-        <single-feed  v-for="(item, index) in feeds" v-if="index < 3" :key="index" :item="item"></single-feed>
-        <related-circle :relatedCircles="relatedCircles"/>
-        <single-feed  v-for="(item, index) in feeds" v-if="index >= 3" :key="index" :item="item"></single-feed>
+        <feed-item  v-for="(item, index) in feeds" v-if="index < 3" :key="index" :item="item"></feed-item>
+        <related-circle :related-circles="relatedCircles"/>
+        <feed-item  v-for="(item, index) in feeds" v-if="index >= 3" :key="index" :item="item"></feed-item>
     </div>
 </template>
 <script>
-import SingleFeed from 'components/SingleFeed'
+import FeedItem from 'components/FeedItem'
 import RelatedCircle from 'components/RelatedCircle'
 export default {
   name: 'feed-list',
@@ -21,7 +21,7 @@ export default {
     }
   },
   components: {
-    SingleFeed,
+    FeedItem,
     RelatedCircle
   }
 }

@@ -3,6 +3,7 @@ const path = require('path')
 const Koa = require('koa')
 const KoaRuoter = require('koa-router')
 const { createBundleRenderer } = require('vue-server-renderer')
+const cookieParser = require('cookie-parser')
 const LRU = require('lru-cache')
 const send = require('koa-send')
 
@@ -29,8 +30,10 @@ function createRenderer (bundle, options) {
                 maxAge: 1000 * 60 * 15
             }),
             basedir: resolve('./dist'),
-            runInNewContext: false
-        })
+            runInNewContext: false,
+            inject: false
+        }),
+       
     )
 }
 
@@ -124,6 +127,7 @@ function render (ctx, next) {
             title: 'paopao',
             url: ctx.url
         }
+       
         renderer.renderToString(context, (err, html) => {
             if (err) {
                 return handleError(err)
