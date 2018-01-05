@@ -15,7 +15,9 @@ export default context => {
       Promise.all(matchedComponents.map(component => {
         return component.asyncData && component.asyncData({
           store,
-          route: router.currentRoute
+          route: router.currentRoute,
+          cookies: context.cookies,
+          isServer: true
         })
       })).then(() => {
         isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)

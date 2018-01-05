@@ -10,9 +10,23 @@ export default {
   getMoreCicle,
   getAgree
 }
-function getCircleData (circleId) {
-  console.log(`http://pub.m.iqiyi.com/h5/bubble/circleInfo.json?circleId=${circleId}`)
-  return Axios.get(`http://pub.m.iqiyi.com/h5/bubble/circleInfo.json?circleId=${circleId}`).then((data) => {
+
+// function parserCookies (cookies = {}) {
+//   return Object.keys(cookies).map((key) => `${key}=${encodeURIComponent[cookies[key]]}`).join(';')
+// }
+
+function getCircleData ({circleId, cookies}) {
+  let opts = {
+    params: {
+      circleId
+    }
+  }
+  if (cookies) {
+    opts.headers = {
+      Cookie: cookies
+    }
+  }
+  return Axios.get(`http://pub.m.iqiyi.com/h5/bubble/circleInfo.json`, opts).then((data) => {
     const code = data.data.code
     if (code === 'A00000') {
       return data.data.data
@@ -59,10 +73,14 @@ function getAgree (params) {
     authcookie: user.getAuthcookie(),
     device_id: user.getAnonymousUid()
   }
-  return jsonp(`//api.t.iqiyi.com/feed/agree`, Object.assign(opt, params)).then((data) => {
-    const code = data.code
+  return Axios.get(`//api.t.iqiyi.com/feed/agree`, {
+    params: Object.assign(opt, params)
+  }).then((data) => {
+    const code = data.data.code
     if (code === 'A00000') {
-      return data.data
+      return data.data.data
     }
+  }).catch((error) => {
+    console.log(error)
   })
 }

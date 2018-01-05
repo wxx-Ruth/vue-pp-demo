@@ -3,7 +3,6 @@ const path = require('path')
 const Koa = require('koa')
 const KoaRuoter = require('koa-router')
 const { createBundleRenderer } = require('vue-server-renderer')
-const cookieParser = require('cookie-parser')
 const LRU = require('lru-cache')
 const send = require('koa-send')
 
@@ -125,7 +124,8 @@ function render (ctx, next) {
         }
         const context = {
             title: 'paopao',
-            url: ctx.url
+            url: ctx.url,
+            cookies: ctx.get('cookie')
         }
        
         renderer.renderToString(context, (err, html) => {

@@ -82,9 +82,9 @@ export default {
       return this.getCurrentPosition(this.currentIndex)
     }
   },
-  asyncData ({ store, route }) {
+  asyncData ({ store, route, cookies, isServer }) {
     this.circleId = route.params.circleId
-    return store.dispatch('getCircleData', this.circleId)
+    return store.dispatch('getCircleData', {circleId: this.circleId, cookies})
   },
   mounted () {
     const that = this

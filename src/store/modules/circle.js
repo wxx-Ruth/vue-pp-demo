@@ -1,7 +1,7 @@
 import services from '../../services/circle'
 
-async function getCircleData ({commit, state}, circleId) {
-  let data = await services.getCircleData(circleId)
+async function getCircleData ({commit, state}, opts) {
+  let data = await services.getCircleData(opts)
   commit('addCircleData', data)
   commit('addFeedList', data.feeds)
 }
@@ -13,6 +13,12 @@ async function getMoreCircle ({commit, state}, params) {
   let data = await services.getMoreCicle(params)
   commit('addFeedList', data.feeds)
 }
+
+async function setAgreeInfo ({commit, state}, params) {
+  let agreeInfo = await services.getAgree(params)
+  commit('updateAgree', agreeInfo || {})
+}
+
 function addCircleData (state, data) {
   state.circle = data.circle
   state.relatedCircles = data.relatedCircles
@@ -22,6 +28,15 @@ function addFeedList (state, data) {
 }
 function addStarPro (state, starPro) {
   state.starPros = starPro
+}
+// 点赞修改状态
+function updateAgree (state, { feedId, agree }) {
+  state.feedList.map((item) => {
+    if (item.feedId === feedId) {
+      item.isAgree = !!agree
+      return item
+    }
+  })
 }
 
 export default {
@@ -35,11 +50,13 @@ export default {
   actions: {
     getCircleData,
     getStarPros,
-    getMoreCircle
+    getMoreCircle,
+    setAgreeInfo
   },
   mutations: {
     addCircleData,
     addFeedList,
-    addStarPro
+    addStarPro,
+    updateAgree
   }
 }

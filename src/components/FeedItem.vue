@@ -70,7 +70,6 @@
     import PicFeed from 'components/FeedPic'
     import VideoFeed from 'components/FeedVideo'
     import {isLogin} from '@/services/user'
-    import services from '../services/circle'
     export default {
       name: 'FeedItem',
       props: {
@@ -89,15 +88,15 @@
             feedId: feedId,
             sourceType: sourceType
           }
-          if (isLogin()) {
+          if (!isLogin()) {
             window.location.href = 'http://m.iqiyi.com/user.html'
           } else {
             if (isAgree) {
               this.params.agree = 0
-              this.ilike = false
             } else {
-              services.getAgree(this.params)
+              this.params.agree = 1
             }
+            return this.$store.dispatch('setAgreeInfo', this.params)
           }
         }
       }
